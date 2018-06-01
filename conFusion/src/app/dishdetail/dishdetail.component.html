@@ -35,26 +35,56 @@
   </div>
 
   <div fxFlex="40" *ngIf="dish">
-     <div fxFlex>
+    <div>
       <h3>Comments</h3>
         <md-list *ngFor="let comment of dish.comments">
           <md-list-item>{{comment.comment}}</md-list-item>
           <md-list-item>{{comment.rating}} Stars</md-list-item>
           <md-list-item>-- {{comment.author}} {{comment.date | date}}</md-list-item>
         </md-list>
-      </div>
+    </div>
+
+    <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+      <md-list *ngIf="commentForm.valid">
+        <md-list-item>
+          <h1 md-line> {{ commentForm.get('comment').value}} </h1>
+          <p md-line> {{ commentForm.get('rating').value}} Stars</p>
+          <p md-line>
+            <span>-- {{ commentForm.get('author').value}}</span>
+          </p>
+        </md-list-item>
+      </md-list>
+      
+      <p>
+        <md-input-container class="half-width" dividerColor="{{(formErrors.author) ? 'warn' : 'primary'}}">
+          <input mdInput formControlName="author" placeholder="Author" type="text" required>
+          <md-hint>
+            <span [hidden]="!(formErrors.author)">
+              {{formErrors.author}}</span>
+          </md-hint>
+        </md-input-container>
+      </p>
+      <p>
+        <md-slider min="1" max="5" step="1" thumbLabel="5" tickInterval="5" name="rating" formControlName="rating"></md-slider>
+        <md-input-container class="full-width" dividerColor="{{(formErrors.comment) ? 'warn' : 'primary'}}">
+          <textarea mdInput formControlName="comment" placeholder="Your Comment" rows=4></textarea>
+          <md-hint>
+            <span [hidden]="!(formErrors.comment)">
+              {{formErrors.comment}}</span>
+          </md-hint>
+        </md-input-container>
+      </p>
+      <button type="submit" md-button class="background-primary text-floral-white" [disabled]="commentForm.invalid">Submit</button>
+    </form>
   </div>
 
-  <!-- <div fxFlex>
-    <md-grid-list cols="2" rowHeight="200px">
-      <md-grid-tile *ngFor="let dish of dishes">
-        <img height="200px" src={{dish.image}} alt={{dish.name}}>
-        <md-grid-tile-footer> 
-        <h1 md-line>{{dish.name | uppercase}}</h1>
-        </md-grid-tile-footer>
-      </md-grid-tile>
-    </md-grid-list>
-  </div> -->
-
+  <div *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{errMess}}</h4>
+  </div>
+  <div [hidden]="dish || errMess">
+    <md-spinner></md-spinner>
+    <h4>Loading . . . Please Wait</h4>
+  </div>
 
 </div>
