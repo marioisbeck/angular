@@ -5,6 +5,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material'; 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { HttpModule } from '@angular/http';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
+import { baseURL } from './shared/baseurl';
 
 import 'hammerjs';
 import { AppComponent } from './app.component';
@@ -41,12 +44,19 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
+    HttpModule,
     FlexLayoutModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [DishService, PromotionService, LeaderService],
+  providers: [
+    DishService,
+    ProcessHTTPMsgService,
+    PromotionService, 
+    LeaderService,
+    {provide: 'BaseURL', useValue: baseURL}
+  ],
   entryComponents: [
     LoginComponent
   ],
