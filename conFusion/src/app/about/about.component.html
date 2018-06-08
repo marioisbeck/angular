@@ -58,7 +58,7 @@
   <md-card>
     <md-list *ngIf="leaders" [@expand]>
       <md-list-item *ngFor="let leader of leaders">
-        <img mat-list-avatar src="{{leader.image}}" alt={{leader.name}}>
+        <img mat-list-avatar src="{{BaseURL + leader.image}}" alt={{leader.name}}>
         <div class="md-list-item-text" layout="column">
           <p md-line>{{leader.name}}, <i>{{leader.abbr}}</i></p>
           <p md-line>{{leader.designation}}</p>
