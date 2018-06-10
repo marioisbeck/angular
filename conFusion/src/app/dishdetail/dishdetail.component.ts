@@ -27,6 +27,7 @@ import 'rxjs/add/operator/switchMap';
     expand()
   ]
 })
+
 export class DishdetailComponent implements OnInit {
   dish: Dish;
   dishcopy = null;
@@ -79,7 +80,12 @@ export class DishdetailComponent implements OnInit {
         this.visibility = 'hidden'; 
         return this.dishservice.getDish(+params['id']);
       })
-      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown'; },
+      .subscribe(dish => { 
+        this.dish = dish; 
+        this.dishcopy = dish; 
+        this.setPrevNext(dish.id); 
+        this.visibility = 'shown';
+      },
       errmess => this.errMess = <any>errmess);
   }
 
